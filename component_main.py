@@ -13,7 +13,7 @@ class Component(ComponentAbstract):
     '''
 
     def __init__(self, component_name='run_mutationseq', component_parent_dir=None, seed_dir=None):
-        self.version = "1.0.9"
+        self.version = "1.0.10"
 
         ## initialize ComponentAbstract
         super(Component, self).__init__(component_name, component_parent_dir, seed_dir)
@@ -93,7 +93,11 @@ class Component(ComponentAbstract):
 
                 else:
                     cmd_args.extend([v])
-        
+           
+            # if v is 0 then it doesn't enter any of the previous loops as 0 evaluates as False/None
+            if not isinstance(v, bool) and v == 0:
+                cmd_args.extend(['--'+k, v])       
+
         if chunk is not None:
             cmd, cmd_args = self.focus(cmd, cmd_args, chunk)
 

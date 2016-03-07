@@ -3,8 +3,8 @@ Created on Apr 29, 2014
 
 @author: jtaghiyar
 '''
-input_files  = {'tumour':None, 
-                'normal':None, 
+input_files  = {'tumour':'__OPTIONAL__', 
+                'normal':'__OPTIONAL__', 
                 'reference':'__REQUIRED__', 
                 'model':'__REQUIRED__',
                 'config':'metadata.config', 
@@ -26,7 +26,7 @@ input_params = {'all':'__FLAG__',
                 'mapq_threshold':20,
                 'baseq_threshold':10,
                 'indl_threshold':0.05,
-                'manifest':None,
+                'manifest':'__OPTIONAL__',
                 'single':'__FLAG__',
                 'threshold':0.5,
                 'tumour_variant':2,

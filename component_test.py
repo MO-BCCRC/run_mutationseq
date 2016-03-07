@@ -150,7 +150,7 @@ class componentTests(unittest.TestCase):
             if req == True:
                 self.assertEqual(params_dict[dest], '__REQUIRED__', 'params and ui dont match')
             else:
-                if not params_dict[dest] in [default,None, '__FLAG__']:
+                if not params_dict[dest] in [default,'__OPTIONAL__', '__FLAG__']:
                     self.assertEqual(True, False, 'Please ensure that either default or ' +\
                                      '__OPTIONAL__ flag is provided for: '+dest)
 
