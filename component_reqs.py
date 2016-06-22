@@ -18,6 +18,6 @@ memory = '5G'
 requirements = {'python': 'python',
                 'mutationseq':'mutationseq'}
 
-version = '1.0.10'
+version = '1.0.11'
 
 seed_version = '4.3.7'

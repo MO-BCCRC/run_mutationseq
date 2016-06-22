@@ -13,7 +13,7 @@ class Component(ComponentAbstract):
     '''
 
     def __init__(self, component_name='run_mutationseq', component_parent_dir=None, seed_dir=None):
-        self.version = "1.0.10"
+        self.version = "1.0.11"
 
         ## initialize ComponentAbstract
         super(Component, self).__init__(component_name, component_parent_dir, seed_dir)

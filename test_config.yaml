@@ -1,0 +1,294 @@
+make_cmd_tests:
+    normal_pipeline_args:
+      chunk: null
+      args:
+            all: false
+            baseq_threshold: 10
+            buffer_size: 2G
+            config: metadata.config
+            coverage: 4
+            deep: false
+            export_features: null
+            features_only: false
+            indl_threshold: 0.05
+            interval: null
+            log_file: mutationSeq_run.log
+            manifest: null
+            mapq_threshold: 20
+            model: model_v4.1.2.npz
+            no_filter: false
+            normal_variant: 25
+            normalized: false
+            out: null
+            positions_file: null
+            purity: 70
+            reference: ref.fasta
+            single: false
+            threshold: 0.5
+            titan_mode: false
+            tumour_variant: 2
+            verbose: false
+            tumour: '/path/to/tumour'
+            normal: '/path/to/normal'
+      output:
+            cmd: 'python mutationseq/classify.py'
+            cmd_args:
+                  - 'reference:ref.fasta model:mutationseq/model_v4.1.2.npz tumour:/path/to/tumour normal:/path/to/normal'
+                  - '--log_file'
+                  - 'mutationSeq_run.log'
+                  - '--purity'
+                  - 70
+                  - '--coverage'
+                  - 4
+                  - '--threshold'
+                  - 0.5
+                  - '--buffer_size'
+                  - '2G'
+                  - '--mapq_threshold'
+                  - 20
+                  - '--indl_threshold'
+                  - 0.05
+                  - '--normal_variant'
+                  - 25
+                  - '--tumour_variant'
+                  - 2
+                  - '--baseq_threshold'
+                  - 10
+                  - '--config'
+                  - 'mutationseq/metadata.config'
+                  - "\n if ! grep -q \"successfully completed\" mutationSeq_run.log; then exit -1; fi"
+# the make_cmd function used to treat the zeros as null which meant museq ended up running with the default val instead of 0. see PCD-558 
+    test_zero_vals:
+      chunk: null
+      args:
+            all: false
+            baseq_threshold: 10
+            buffer_size: 2G
+            config: metadata.config
+            coverage: 0
+            deep: false
+            export_features: null
+            features_only: false
+            indl_threshold: 0.05
+            interval: null
+            log_file: mutationSeq_run.log
+            manifest: null
+            mapq_threshold: 20
+            model: model_v4.1.2.npz
+            no_filter: false
+            normal_variant: 25
+            normalized: false
+            out: null
+            positions_file: null
+            purity: 70
+            reference: ref.fasta
+            single: false
+            threshold: 0.5
+            titan_mode: false
+            tumour_variant: 2
+            verbose: false
+            tumour: '/path/to/tumour'
+            normal: '/path/to/normal'
+      output:
+            cmd: 'python mutationseq/classify.py'
+            cmd_args:
+                  - 'reference:ref.fasta model:mutationseq/model_v4.1.2.npz tumour:/path/to/tumour normal:/path/to/normal'
+                  - '--log_file'
+                  - 'mutationSeq_run.log'
+                  - '--purity'
+                  - 70
+                  - '--coverage'
+                  - 0
+                  - '--threshold'
+                  - 0.5
+                  - '--buffer_size'
+                  - '2G'
+                  - '--mapq_threshold'
+                  - 20
+                  - '--indl_threshold'
+                  - 0.05
+                  - '--normal_variant'
+                  - 25
+                  - '--tumour_variant'
+                  - 2
+                  - '--baseq_threshold'
+                  - 10
+                  - '--config'
+                  - 'mutationseq/metadata.config'
+                  - "\n if ! grep -q \"successfully completed\" mutationSeq_run.log; then exit -1; fi"
+    test_titan_mode:
+      chunk: null
+      args:
+            all: false
+            baseq_threshold: 10
+            buffer_size: 2G
+            config: metadata.config
+            coverage: 0
+            deep: false
+            export_features: null
+            features_only: false
+            indl_threshold: 0.05
+            interval: null
+            log_file: mutationSeq_run.log
+            manifest: null
+            mapq_threshold: 20
+            model: model_v4.1.2.npz
+            no_filter: false
+            normal_variant: 25
+            normalized: false
+            out: null
+            positions_file: null
+            purity: 70
+            reference: ref.fasta
+            single: false
+            threshold: 0.5
+            titan_mode: true
+            tumour_variant: 2
+            verbose: false
+            tumour: '/path/to/tumour'
+            normal: '/path/to/normal'
+      output:
+            cmd: 'python mutationseq/preprocess.py'
+            cmd_args:
+                  - 'reference:ref.fasta model:mutationseq/model_v4.1.2.npz tumour:/path/to/tumour normal:/path/to/normal'
+                  - '--log_file'
+                  - 'mutationSeq_run.log'
+                  - '--purity'
+                  - 70
+                  - '--coverage'
+                  - 0
+                  - '--threshold'
+                  - 0.5
+                  - '--buffer_size'
+                  - '2G'
+                  - '--mapq_threshold'
+                  - 20
+                  - '--indl_threshold'
+                  - 0.05
+                  - '--normal_variant'
+                  - 25
+                  - '--tumour_variant'
+                  - 2
+                  - '--baseq_threshold'
+                  - 10
+                  - '--config'
+                  - 'mutationseq/metadata.config'
+                  - "\n if ! grep -q \"successfully completed\" mutationSeq_run.log; then exit -1; fi"
+    test_chr_chunk:
+      chunk: 1
+      args:
+            all: false
+            baseq_threshold: 10
+            buffer_size: 2G
+            config: metadata.config
+            coverage: 0
+            deep: false
+            export_features: null
+            features_only: false
+            indl_threshold: 0.05
+            interval: null
+            log_file: mutationSeq_run.log
+            manifest: null
+            mapq_threshold: 20
+            model: model_v4.1.2.npz
+            no_filter: false
+            normal_variant: 25
+            normalized: false
+            out: null
+            positions_file: null
+            purity: 70
+            reference: ref.fasta
+            single: false
+            threshold: 0.5
+            titan_mode: false
+            tumour_variant: 2
+            verbose: false
+            tumour: '/path/to/tumour'
+            normal: '/path/to/normal'
+      output:
+            cmd: 'python mutationseq/classify.py'
+            cmd_args:
+                  - 'reference:ref.fasta model:mutationseq/model_v4.1.2.npz tumour:/path/to/tumour normal:/path/to/normal'
+                  - '--log_file'
+                  - 'mutationSeq_run.log'
+                  - '--purity'
+                  - 70
+                  - '--coverage'
+                  - 0
+                  - '--threshold'
+                  - 0.5
+                  - '--buffer_size'
+                  - '2G'
+                  - '--mapq_threshold'
+                  - 20
+                  - '--indl_threshold'
+                  - 0.05
+                  - '--normal_variant'
+                  - 25
+                  - '--tumour_variant'
+                  - 2
+                  - '--baseq_threshold'
+                  - 10
+                  - '--config'
+                  - 'mutationseq/metadata.config'
+                  - '--interval 1'
+                  - "\n if ! grep -q \"successfully completed\" mutationSeq_run.log; then exit -1; fi"
+    test_chr_chunk_ucsc:
+      chunk: chr1
+      args:
+            all: false
+            baseq_threshold: 10
+            buffer_size: 2G
+            config: metadata.config
+            coverage: 0
+            deep: false
+            export_features: null
+            features_only: false
+            indl_threshold: 0.05
+            interval: null
+            log_file: mutationSeq_run.log
+            manifest: null
+            mapq_threshold: 20
+            model: model_v4.1.2.npz
+            no_filter: false
+            normal_variant: 25
+            normalized: false
+            out: null
+            positions_file: null
+            purity: 70
+            reference: ref.fasta
+            single: false
+            threshold: 0.5
+            titan_mode: false
+            tumour_variant: 2
+            verbose: false
+            tumour: '/path/to/tumour'
+            normal: '/path/to/normal'
+      output:
+            cmd: 'python mutationseq/classify.py'
+            cmd_args:
+                  - 'reference:ref.fasta model:mutationseq/model_v4.1.2.npz tumour:/path/to/tumour normal:/path/to/normal'
+                  - '--log_file'
+                  - 'mutationSeq_run.log'
+                  - '--purity'
+                  - 70
+                  - '--coverage'
+                  - 0
+                  - '--threshold'
+                  - 0.5
+                  - '--buffer_size'
+                  - '2G'
+                  - '--mapq_threshold'
+                  - 20
+                  - '--indl_threshold'
+                  - 0.05
+                  - '--normal_variant'
+                  - 25
+                  - '--tumour_variant'
+                  - 2
+                  - '--baseq_threshold'
+                  - 10
+                  - '--config'
+                  - 'mutationseq/metadata.config'
+                  - '--interval chr1'
+                  - "\n if ! grep -q \"successfully completed\" mutationSeq_run.log; then exit -1; fi"
