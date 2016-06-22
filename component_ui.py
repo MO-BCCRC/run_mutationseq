@@ -15,11 +15,46 @@ parser = argparse.ArgumentParser(prog='mutationSeq',
                                  description = '''mutationSeq: a feature-based classifier
                                  for somatic mutation detection in
                                  tumour-normal paired sequencing data''')
-## positional arguments
-parser.add_argument("samples",
-                    nargs='*',
-                    help='''A list of colon delimited sample names; normal:normal.bam
-                    tumour:tumour.bam model:model.npz reference:reference.fasta''')
+
+mandatory_options = parser.add_argument_group("required arguments")
+
+exgroup = parser.add_mutually_exclusive_group()
+
+parser.add_argument("--tumour",
+                    help='path to the input file')
+parser.add_argument("--normal",
+                    help='path to the input file')
+parser.add_argument("--reference",
+                    required=True,
+                    help='path to the input file')
+parser.add_argument("--model",
+                    required=True,
+                    help='path to the input file')
+
+## mandatory options
+mandatory_options.add_argument("-c", "--config",
+                               default=None,
+                               #required=True,
+                               help='''specify the path/to/metadata.config file used to add
+                               meta information to the output file''')
+
+exgroup.add_argument("-f", "--positions_file",
+                     default=None,
+                     help='''input a file containing a list of positions each of which in
+                     a separate line, e.g. chr1:12345\nchr2:23456''')
+
+parser.add_argument("-e" , "--export_features",
+                    default=None,
+                    help='''save exported feature vector to the specified path''')
+
+parser.add_argument("-l", "--log_file",
+                    default="mutationSeq_run.log",
+                    help='''specify name or path of the log file''')
+
+mandatory_options.add_argument("-o", "--out",
+                               default=None,
+                               #required=True,
+                               help='''specify the path/to/out.vcf to save output to a file''')
 
 ## optional arguments
 parser.add_argument("-a", "--all",
@@ -31,15 +66,6 @@ parser.add_argument("-b", "--buffer_size",
                     default="2G",
                     help='''specify max amount of memory usage''')
 
-
-parser.add_argument( "--titan_mode",
-                    action = 'store_true',
-                    help='''runs preprocess.py (titan preprocessing mode)''')
-
-parser.add_argument( "--return_cov",
-                    action = 'store_true',
-                    help='''calculate coverage''')
-
 parser.add_argument("--coverage",
                     default=4,
                     type=int,
@@ -49,13 +75,9 @@ parser.add_argument("-d", "--deep",
                     default=False, action="store_true",
                     help='''deepseq data analysis''')
 
-parser.add_argument("-e" , "--export_features",
-                    default=None,
-                    help='''save exported feature vector to the specified path''')
-
-parser.add_argument("-l", "--log_file",
-                    default="mutationSeq_run.log",
-                    help='''specify name or path of the log file''')
+exgroup.add_argument("-i", "--interval",
+                     default=None,
+                     help='''specify an interval "chr[:start-stop]"''')
 
 parser.add_argument("--no_filter",
                     default=False, action="store_true",
@@ -87,6 +109,13 @@ parser.add_argument( "--baseq_threshold",
                     type=int,
                     help='''set threshold for the base quality''')
 
+parser.add_argument("--indl_threshold",
+                    default=0.05, type=float,
+                    help='''set threshold for INDL call''')
+
+parser.add_argument("--manifest",
+                    help='''path to the manifest file''')
+
 parser.add_argument("-s", "--single",
                     default=False, action="store_true",
                     help='''single sample analysis''')
@@ -108,31 +137,9 @@ parser.add_argument("-v", "--verbose",
                     action="store_true", default=False,
                     help='''verbose''')
 
-parser.add_argument("--version",
-                    action="version", version=mutationSeq_version)
+parser.add_argument( "--titan_mode",
+                    action = 'store_true',
+                    help='''runs preprocess.py (titan preprocessing mode)''')
 
-## mandatory options
-mandatory_options = parser.add_argument_group("required arguments")
-mandatory_options.add_argument("-c", "--config",
-                               default=None,
-                               #required=True,
-                               help='''specify the path/to/metadata.config file used to add
-                               meta information to the output file''')
-
-mandatory_options.add_argument("-o", "--out",
-                               default=None,
-                               #required=True,
-                               help='''specify the path/to/out.vcf to save output to a file''')
-
-## mutually exclusive options
-exgroup = parser.add_mutually_exclusive_group()
-exgroup.add_argument("-f", "--positions_file",
-                     default=None,
-                     help='''input a file containing a list of positions each of which in
-                     a separate line, e.g. chr1:12345\nchr2:23456''')
-
-exgroup.add_argument("-i", "--interval",
-                     default=None,
-                     help='''specify an interval "chr[:start-stop]"''')
 
 args, unknown  = parser.parse_known_args()
